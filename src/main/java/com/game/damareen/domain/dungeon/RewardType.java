@@ -1,4 +1,4 @@
-package com.game.damareen.domain;
+package com.game.damareen.domain.dungeon;
 
 public enum RewardType {
     BONUS_DAMAGE,

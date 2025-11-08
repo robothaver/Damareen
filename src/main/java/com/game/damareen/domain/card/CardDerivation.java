@@ -1,4 +1,4 @@
-package com.game.damareen.domain;
+package com.game.damareen.domain.card;
 
 public enum CardDerivation {
     DOUBLE_DAMAGE,
