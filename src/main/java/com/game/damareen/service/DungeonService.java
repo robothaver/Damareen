@@ -5,4 +5,5 @@ import com.game.damareen.domain.request.DungeonCreateRequest;
 
 public interface DungeonService {
     Dungeon createDungeon(DungeonCreateRequest request);
+    Dungeon getDungeonById(Long id);
 }

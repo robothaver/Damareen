@@ -3,16 +3,43 @@ package com.game.damareen.domain;
 import com.game.damareen.domain.card.LeadCard;
 import com.game.damareen.domain.card.WorldCard;
 import com.game.damareen.domain.dungeon.Dungeon;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
-@Data
+@Setter
+@Getter
 public class World {
-    private final long id;
-    private final long playerId;
-    private final String name;
-    private final List<Dungeon> dungeons;
-    private final List<WorldCard> worldCards;
-    private final List<LeadCard> leadCards;
+    private long id;
+    private long playerId;
+    private String name;
+    private List<Dungeon> dungeons;
+    private List<WorldCard> worldCards;
+    private List<LeadCard> leadCards;
+
+    public World() {
+    }
+
+    public World(long id, long playerId, String name, List<Dungeon> dungeons,
+                 List<WorldCard> worldCards, List<LeadCard> leadCards) {
+        this.id = id;
+        this.playerId = playerId;
+        this.name = name;
+        this.dungeons = dungeons;
+        this.worldCards = worldCards;
+        this.leadCards = leadCards;
+    }
+
+    @Override
+    public String toString() {
+        return "World{" +
+                "id=" + id +
+                ", playerId=" + playerId +
+                ", name='" + name + '\'' +
+                ", dungeons=" + dungeons +
+                ", worldCards=" + worldCards +
+                ", leadCards=" + leadCards +
+                '}';
+    }
 }

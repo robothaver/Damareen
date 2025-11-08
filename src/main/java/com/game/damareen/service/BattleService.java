@@ -9,13 +9,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class BattleService {
     public BattleRound evaluateBattle(CardEntity playerCard, CardEntity dungeonCard) {
-        boolean playerWinsByDamge = playerCard.getDamage() > dungeonCard.getDamage();
+        boolean playerWinsByDamage = playerCard.getDamage() > dungeonCard.getHealth();
         boolean dungeonWinsByDamage = dungeonCard.getDamage() > playerCard.getHealth();
 
         WorldCard playerDto = toDto(playerCard);
         WorldCard dungeonDto = toDto(dungeonCard);
 
-        if (playerWinsByDamge && !dungeonWinsByDamage) {
+        if (playerWinsByDamage && !dungeonWinsByDamage) {
             return new BattleRound(
                     playerDto, dungeonDto, "player",
                     String.format("%s damage (%d) > %s health (%d)",
@@ -24,7 +24,7 @@ public class BattleService {
             );
         }
 
-        if (dungeonWinsByDamage && !playerWinsByDamge) {
+        if (dungeonWinsByDamage && !playerWinsByDamage) {
             return new BattleRound(
                     playerDto, dungeonDto, "dungeon",
                     String.format("%s damage (%d) > %s health (%d)",
@@ -39,7 +39,7 @@ public class BattleService {
         if (playerType.beats(dungeonType)) {
             return new BattleRound(
                     playerDto, dungeonDto, "player",
-                    String.format("%s defeats %s",
+                    String.format("%s beats %s by type",
                             playerType, dungeonType)
             );
         }
@@ -47,14 +47,14 @@ public class BattleService {
         if (dungeonType.beats(playerType)) {
             return new BattleRound(
                     playerDto, dungeonDto, "dungeon",
-                    String.format("%s defeats %s",
+                    String.format("%s beats %s by type",
                             dungeonType, playerType)
             );
         }
 
         return new BattleRound(
                 playerDto, dungeonDto, "dungeon",
-                "Draw so dungeon wins"
+                "Draw - dungeon wins by default"
         );
     }
 
