@@ -2,10 +2,10 @@ package com.game.damareen.service;
 
 import com.game.damareen.domain.card.LeadCard;
 import com.game.damareen.domain.card.WorldCard;
-import com.game.damareen.domain.db.entity.CardEntity;
-import com.game.damareen.domain.db.entity.DungeonEntity;
-import com.game.damareen.domain.db.entity.LeaderCardEntity;
-import com.game.damareen.domain.db.mapper.CardMapper;
+import com.game.damareen.db.entity.CardEntity;
+import com.game.damareen.db.entity.DungeonEntity;
+import com.game.damareen.db.entity.LeaderCardEntity;
+import com.game.damareen.db.mapper.CardMapper;
 import com.game.damareen.domain.dungeon.Dungeon;
 import com.game.damareen.domain.dungeon.DungeonType;
 import com.game.damareen.domain.request.DungeonCreateRequest;

@@ -1,4 +1,4 @@
-package com.game.damareen.domain.db.entity;
+package com.game.damareen.db.entity;
 
 import com.game.damareen.domain.dungeon.DungeonType;
 import jakarta.persistence.*;

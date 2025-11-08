@@ -1,6 +1,6 @@
 package com.game.damareen.service;
 
-import com.game.damareen.domain.db.entity.PlayerEntity;
+import com.game.damareen.db.entity.PlayerEntity;
 import com.game.damareen.exception.DuplicatePlayerException;
 import com.game.damareen.exception.PlayerNotFoundException;
 import com.game.damareen.repository.PlayerRepository;

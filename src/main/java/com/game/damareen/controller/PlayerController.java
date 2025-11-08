@@ -16,8 +16,6 @@ public class PlayerController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public void createPlayer(@Valid @NotBlank(message = "Player name cant be blank") @RequestParam String playerName) {
-        System.out.println(playerName);
-        System.out.println(playerName + " created player");
         playerService.createPlayer(playerName);
     }
 }

@@ -1,6 +1,6 @@
 package com.game.damareen.repository;
 
-import com.game.damareen.domain.db.entity.PlayerEntity;
+import com.game.damareen.db.entity.PlayerEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,7 +1,7 @@
 package com.game.damareen.controller;
 
 import com.game.damareen.domain.BattleResult;
-import com.game.damareen.domain.db.entity.GameEntity;
+import com.game.damareen.db.entity.GameEntity;
 import com.game.damareen.domain.dungeon.RewardType;
 import com.game.damareen.service.GameService;
 import jakarta.validation.Valid;

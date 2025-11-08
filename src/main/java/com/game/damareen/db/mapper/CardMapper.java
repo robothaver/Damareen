@@ -1,7 +1,7 @@
-package com.game.damareen.domain.db.mapper;
+package com.game.damareen.db.mapper;
 
 import com.game.damareen.domain.card.WorldCard;
-import com.game.damareen.domain.db.entity.CardEntity;
+import com.game.damareen.db.entity.CardEntity;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

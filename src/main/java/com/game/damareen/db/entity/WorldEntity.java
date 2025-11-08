@@ -1,4 +1,4 @@
-package com.game.damareen.domain.db.entity;
+package com.game.damareen.db.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

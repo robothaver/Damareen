@@ -2,10 +2,10 @@ package com.game.damareen.service;
 
 import com.game.damareen.domain.BattleResult;
 import com.game.damareen.domain.BattleRound;
-import com.game.damareen.domain.db.entity.CardEntity;
-import com.game.damareen.domain.db.entity.DungeonEntity;
-import com.game.damareen.domain.db.entity.GameEntity;
-import com.game.damareen.domain.db.entity.WorldEntity;
+import com.game.damareen.db.entity.CardEntity;
+import com.game.damareen.db.entity.DungeonEntity;
+import com.game.damareen.db.entity.GameEntity;
+import com.game.damareen.db.entity.WorldEntity;
 import com.game.damareen.domain.dungeon.DungeonType;
 import com.game.damareen.domain.dungeon.RewardType;
 import com.game.damareen.exception.*;

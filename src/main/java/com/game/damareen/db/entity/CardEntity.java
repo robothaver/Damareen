@@ -1,40 +1,51 @@
-package com.game.damareen.domain.db.entity;
+package com.game.damareen.db.entity;
 
-import com.game.damareen.domain.card.CardDerivation;
+import com.game.damareen.domain.card.CardType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.proxy.HibernateProxy;
 
 import java.util.Objects;
 
-@Data
+@Getter
+@Setter
+@ToString
+@Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-@Table(name = "leader_cards")
-public class LeaderCardEntity extends CardEntity {
+@Table(name = "cards")
+@Inheritance(strategy = InheritanceType.JOINED)
+public class CardEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(nullable = false)
-    private String baseCardName;
+    private String cardName;
+
+    @Column(nullable = false)
+    private int damage;
+
+    @Column(nullable = false)
+    private int health;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CardDerivation derivationType;
+    private CardType cardType;
 
     @Override
-    public final boolean equals(Object object) {
+    public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null) return false;
         Class<?> oEffectiveClass = object instanceof HibernateProxy ? ((HibernateProxy) object).getHibernateLazyInitializer().getPersistentClass() : object.getClass();
         Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass() : this.getClass();
         if (thisEffectiveClass != oEffectiveClass) return false;
-        LeaderCardEntity that = (LeaderCardEntity) object;
+        CardEntity that = (CardEntity) object;
         return getId() != null && Objects.equals(getId(), that.getId());
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return this instanceof HibernateProxy ? ((HibernateProxy) this).getHibernateLazyInitializer().getPersistentClass().hashCode() : getClass().hashCode();
     }
 }

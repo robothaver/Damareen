@@ -1,9 +1,8 @@
-package com.game.damareen.domain.db.mapper;
+package com.game.damareen.db.mapper;
 
 import com.game.damareen.domain.World;
-import com.game.damareen.domain.db.entity.WorldEntity;
+import com.game.damareen.db.entity.WorldEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface WorldMapper {
