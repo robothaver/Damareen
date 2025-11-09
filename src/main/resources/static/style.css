@@ -1,0 +1,138 @@
+:root {
+    --text: #090f08;
+    --background: #f7fbf6;
+    --primary: #68ba5e;
+    --secondary: #a3da9c;
+    --accent: #74cd6a;
+}
+
+body {
+    background-color: var(--background);
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: var(--text);
+}
+
+/* Modern Input Using Your Palette */
+input[type="text"] {
+    width: 100%;
+    max-width: 320px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-family: system-ui, sans-serif;
+    color: var(--text);
+    background-color: var(--background);
+    border: 1.5px solid var(--secondary);
+    border-radius: 8px;
+    outline: none;
+    transition:
+            border-color 0.25s ease,
+            box-shadow 0.25s ease,
+            background-color 0.25s ease;
+}
+
+/* Hover effect */
+input[type="text"]:hover {
+    border-color: var(--primary);
+}
+
+/* Focus state */
+input[type="text"]:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(116, 205, 106, 0.25);
+    background-color: #ffffff;
+}
+
+/* Disabled state */
+input[type="text"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #e6f1e4;
+    border-color: var(--secondary);
+}
+
+/* Modern Button Using Your Palette */
+input[type="button"],
+button {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    font-family: system-ui, sans-serif;
+    font-weight: 600;
+    color: #fff;
+    background-color: var(--primary);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition:
+            background-color 0.25s ease,
+            box-shadow 0.25s ease,
+            transform 0.15s ease;
+}
+
+/* Hover */
+input[type="button"]:hover,
+button:hover {
+    background-color: var(--accent);
+    box-shadow: 0 4px 10px rgba(116, 205, 106, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Active (pressed) */
+input[type="button"]:active,
+button:active {
+    background-color: var(--primary);
+    box-shadow: 0 2px 5px rgba(104, 186, 94, 0.3);
+    transform: translateY(0);
+}
+
+/* Focus ring for accessibility */
+input[type="button"]:focus-visible,
+button:focus-visible {
+    outline: 3px solid rgba(116, 205, 106, 0.4);
+    outline-offset: 3px;
+}
+
+/* Disabled */
+input[type="button"]:disabled,
+button:disabled {
+    background-color: var(--secondary);
+    color: var(--text);
+    cursor: not-allowed;
+    opacity: 0.6;
+    box-shadow: none;
+}
+
+#start_screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* centers vertically */
+    align-items: center;     /* centers horizontally */
+    text-align: center;
+    gap: 10px;
+    height: 100vh; /* fills the full viewport height */
+}
+
+#start_screen h1 {
+    color: var(--primary);
+    margin: 0;
+}
+
+#start_btn {
+    width: 10rem;
+}
+
+#username_field {
+    width: 15rem;
+    margin-bottom: 20px;
+}
+
+#cardContainer {
+    display: flex;
+    width: 100vw;
+}
+
+#card_con div {
+    background-color: #68ba5e;
+}
