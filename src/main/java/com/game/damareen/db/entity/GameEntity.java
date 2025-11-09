@@ -1,5 +1,6 @@
 package com.game.damareen.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,12 +15,13 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "games")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class GameEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "player_id", nullable = false)
     private PlayerEntity player;
 

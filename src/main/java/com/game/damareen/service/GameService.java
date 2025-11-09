@@ -5,11 +5,14 @@ import com.game.damareen.domain.BattleResult;
 import com.game.damareen.domain.BattleRound;
 import com.game.damareen.db.entity.DungeonEntity;
 import com.game.damareen.db.entity.GameEntity;
+import com.game.damareen.db.entity.PlayerEntity;
 import com.game.damareen.domain.dungeon.DungeonType;
 import com.game.damareen.domain.dungeon.RewardType;
 import com.game.damareen.exception.*;
 import com.game.damareen.repository.DungeonRepository;
 import com.game.damareen.repository.GameRepository;
+import com.game.damareen.repository.PlayerRepository;
+import com.game.damareen.repository.WorldCardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +26,41 @@ public class GameService {
     private final GameRepository gameRepository;
     private final DungeonRepository dungeonRepository;
     private final BattleService battleService;
+    private final PlayerRepository playerRepository;
+    private final WorldCardRepository worldCardRepository;
+
+    @Transactional
+    public GameEntity createGame(Long playerId, List<String> initialCollectionCardNames) {
+        PlayerEntity player = playerRepository.findById(playerId)
+                .orElseThrow(() -> new PlayerNotFoundException("Player not found: " + playerId));
+
+        GameEntity game = new GameEntity();
+        game.setPlayer(player);
+
+        List<WorldCardEntity> collectionCards = new ArrayList<>();
+        List<WorldCardEntity> playerWorldCards = worldCardRepository.findAllByPlayer_Id(playerId);
+
+        for (String cardName : initialCollectionCardNames) {
+            WorldCardEntity card = playerWorldCards.stream()
+                    .filter(c -> c.getCardName().equals(cardName))
+                    .findFirst()
+                    .orElseThrow(() -> new CardNotFoundException("Card not found in player's world: " + cardName));
+
+            WorldCardEntity collectionCard = WorldCardEntity.builder()
+                    .player(player)
+                    .cardName(card.getCardName())
+                    .damage(card.getDamage())
+                    .health(card.getHealth())
+                    .cardType(card.getCardType())
+                    .build();
+            collectionCards.add(collectionCard);
+        }
+
+        game.setCollection(collectionCards);
+        game.setDeck(new ArrayList<>());
+
+        return gameRepository.save(game);
+    }
 
     @Transactional
     public void setDeck(Long gameId, List<String> cardNames) {

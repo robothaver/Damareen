@@ -1,5 +1,6 @@
 package com.game.damareen.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.game.damareen.domain.dungeon.DungeonType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,6 +22,7 @@ public class DungeonEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id", nullable = false)
+    @JsonIgnore
     private PlayerEntity player;
 
     @Column(nullable = false, unique = true)
@@ -30,7 +32,7 @@ public class DungeonEntity {
     @Column(nullable = false)
     private DungeonType type;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "dungeon_cards",
             joinColumns = @JoinColumn(name = "dungeon_id"),

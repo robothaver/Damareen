@@ -1,5 +1,8 @@
 package com.game.damareen.domain.dungeon;
 
+import lombok.Getter;
+
+@Getter
 public enum DungeonType {
     SIMPLE_ENCOUNTER(1, 0, RewardType.BONUS_DAMAGE, 1),
     SMALL_DUNGEON(3, 1, RewardType.BONUS_HEALTH, 2),
@@ -15,22 +18,6 @@ public enum DungeonType {
         this.leaderCardCount = leaderCardCount;
         this.rewardType = rewardType;
         this.rewardAmount = rewardAmount;
-    }
-
-    public int getRegularCardCount() {
-        return regularCardCount;
-    }
-
-    public int getLeaderCardCount() {
-        return leaderCardCount;
-    }
-
-    public RewardType getRewardType() {
-        return rewardType;
-    }
-
-    public int getRewardAmount() {
-        return rewardAmount;
     }
 
     public int getTotalCardCount() {

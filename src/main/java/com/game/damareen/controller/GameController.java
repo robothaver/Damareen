@@ -4,6 +4,7 @@ import com.game.damareen.domain.BattleResult;
 import com.game.damareen.db.entity.GameEntity;
 import com.game.damareen.domain.dungeon.RewardType;
 import com.game.damareen.service.GameService;
+import com.game.damareen.service.PlayerHelperService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -22,16 +23,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GameController {
     private final GameService gameService;
+    private final PlayerHelperService playerHelperService;
 
-    @PostMapping("/create")
+    @PostMapping("/{player}/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<GameEntity> createGame(@Valid @RequestBody CreateGameRequest request) {
-//        GameEntity game = gameService.createGame(
-//                request.getPlayerName(),
-//                request.getWorldId(),
-//                request.getInitialCollection()
-//        );
-        return ResponseEntity.status(HttpStatus.CREATED).body(null);
+    public ResponseEntity<GameEntity> createGame(
+            @PathVariable String player,
+            @Valid @RequestBody CreateGameRequest request) {
+        Long playerId = playerHelperService.createPlayerIfNotExists(player);
+        GameEntity game = gameService.createGame(playerId, request.getInitialCollection());
+        return ResponseEntity.status(HttpStatus.CREATED).body(game);
     }
 
     @GetMapping("/{gameId}")
@@ -67,12 +68,6 @@ public class GameController {
     @NoArgsConstructor
     @AllArgsConstructor
     public static class CreateGameRequest {
-        @NotNull(message = "Player name cannot be null")
-        private String playerName;
-
-        @NotNull(message = "World ID cannot be null")
-        private Long worldId;
-
         @NotEmpty(message = "Initial collection cannot be empty")
         private List<String> initialCollection;
     }

@@ -1,5 +1,6 @@
 package com.game.damareen.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.game.damareen.domain.card.CardDerivation;
 import com.game.damareen.domain.card.CardType;
 import jakarta.persistence.*;
@@ -23,6 +24,7 @@ public class LeadCardEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_id", nullable = false)
+    @JsonIgnore
     private PlayerEntity player;
 
     @Column(nullable = false)
@@ -38,4 +40,3 @@ public class LeadCardEntity {
     @Column(nullable = false)
     private CardType cardType;
 }
-
