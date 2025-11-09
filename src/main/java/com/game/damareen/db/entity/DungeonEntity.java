@@ -19,6 +19,10 @@ public class DungeonEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_id", nullable = false)
+    private PlayerEntity player;
+
     @Column(nullable = false, unique = true)
     private String name;
 
@@ -26,22 +30,12 @@ public class DungeonEntity {
     @Column(nullable = false)
     private DungeonType type;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "dungeon_cards",
             joinColumns = @JoinColumn(name = "dungeon_id"),
             inverseJoinColumns = @JoinColumn(name = "card_id")
     )
     @OrderColumn(name = "card_order")
-    private List<CardEntity> cards = new ArrayList<>();
-
-    @ManyToOne
-    @JoinColumn(name = "world_id")
-    private WorldEntity world;
-
-    public DungeonEntity(String name, DungeonType type) {
-        this.name = name;
-        this.type = type;
-        this.cards = new ArrayList<>();
-    }
+    private List<WorldCardEntity> cards = new ArrayList<>();
 }

@@ -2,6 +2,7 @@ package com.game.damareen.controller;
 
 import com.game.damareen.domain.response.ErrorResponse;
 import com.game.damareen.exception.*;
+import jakarta.validation.ConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import java.util.HashMap;
 import java.util.Map;
 
-@org.springframework.web.bind.annotation.ControllerAdvice
+@org.springframework.web.bind.annotation.RestControllerAdvice
 public class RestControllerAdvice {
 
     @ExceptionHandler(DuplicateCardsInDungeonException.class)
@@ -74,5 +75,14 @@ public class RestControllerAdvice {
     public ResponseEntity<ErrorResponse> handleGenericException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(new ErrorResponse("An unexpected error occurred: " + ex.getMessage()));
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintViolations(ConstraintViolationException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getConstraintViolations().forEach(violation ->
+                errors.put(violation.getPropertyPath().toString(), violation.getMessage())
+        );
+        return ResponseEntity.badRequest().body(errors);
     }
 }

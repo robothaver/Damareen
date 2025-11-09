@@ -1,6 +1,9 @@
 package com.game.damareen.service;
 
+import com.game.damareen.domain.Player;
+
 public interface PlayerService {
-    void createPlayer(String userName);
-    long getPlayer(String userName);
+    long createPlayer(String userName);
+    Long getPlayerId(String userName);
+    Player getPlayerById(Long id);
 }

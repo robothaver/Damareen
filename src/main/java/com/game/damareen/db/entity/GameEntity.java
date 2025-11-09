@@ -19,16 +19,13 @@ public class GameEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String playerName;
-
-    @ManyToOne
-    @JoinColumn(name = "world_id", nullable = false)
-    private WorldEntity world;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "player_id", nullable = false)
+    private PlayerEntity player;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, orphanRemoval = true)
     @JoinColumn(name = "game_id")
-    private List<CardEntity> collection = new ArrayList<>();
+    private List<WorldCardEntity> collection = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "game_deck", joinColumns = @JoinColumn(name = "game_id"))
@@ -42,12 +39,5 @@ public class GameEntity {
     @PrePersist
     protected void onCreate() {
         createdAt = LocalDateTime.now();
-    }
-
-    public GameEntity(String playerName, WorldEntity world) {
-        this.playerName = playerName;
-        this.world = world;
-        this.collection = new ArrayList<>();
-        this.deck = new ArrayList<>();
     }
 }

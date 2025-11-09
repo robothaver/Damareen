@@ -26,12 +26,12 @@ public class GameController {
     @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<GameEntity> createGame(@Valid @RequestBody CreateGameRequest request) {
-        GameEntity game = gameService.createGame(
-                request.getPlayerName(),
-                request.getWorldId(),
-                request.getInitialCollection()
-        );
-        return ResponseEntity.status(HttpStatus.CREATED).body(game);
+//        GameEntity game = gameService.createGame(
+//                request.getPlayerName(),
+//                request.getWorldId(),
+//                request.getInitialCollection()
+//        );
+        return ResponseEntity.status(HttpStatus.CREATED).body(null);
     }
 
     @GetMapping("/{gameId}")

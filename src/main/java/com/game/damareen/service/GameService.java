@@ -1,17 +1,15 @@
 package com.game.damareen.service;
 
+import com.game.damareen.db.entity.WorldCardEntity;
 import com.game.damareen.domain.BattleResult;
 import com.game.damareen.domain.BattleRound;
-import com.game.damareen.db.entity.CardEntity;
 import com.game.damareen.db.entity.DungeonEntity;
 import com.game.damareen.db.entity.GameEntity;
-import com.game.damareen.db.entity.WorldEntity;
 import com.game.damareen.domain.dungeon.DungeonType;
 import com.game.damareen.domain.dungeon.RewardType;
 import com.game.damareen.exception.*;
 import com.game.damareen.repository.DungeonRepository;
 import com.game.damareen.repository.GameRepository;
-import com.game.damareen.repository.WorldRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,34 +21,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class GameService {
     private final GameRepository gameRepository;
-    private final WorldRepository worldRepository;
     private final DungeonRepository dungeonRepository;
     private final BattleService battleService;
-
-    @Transactional
-    public GameEntity createGame(String playerName, Long worldId, List<String> initialCollection) {
-        WorldEntity world = worldRepository.findById(worldId)
-                .orElseThrow(() -> new WorldNotFoundException("World not found: " + worldId));
-
-        GameEntity game = new GameEntity(playerName, world);
-
-        List<CardEntity> collectionCards = new ArrayList<>();
-        for (String cardName : initialCollection) {
-            CardEntity card = world.getWorldCards().stream()
-                    .filter(c -> c.getCardName().equals(cardName))
-                    .findFirst()
-                    .orElseThrow(() -> new CardNotFoundException("Card not found in world: " + cardName));
-
-            CardEntity collectionCard = new CardEntity(
-                    null, card.getCardName(), card.getDamage(),
-                    card.getHealth(), card.getCardType()
-            );
-            collectionCards.add(collectionCard);
-        }
-        game.setCollection(collectionCards);
-
-        return gameRepository.save(game);
-    }
 
     @Transactional
     public void setDeck(Long gameId, List<String> cardNames) {
@@ -89,12 +61,12 @@ public class GameService {
 
         for (int i = 0; i < game.getDeck().size(); i++) {
             String deckCardName = game.getDeck().get(i);
-            CardEntity playerCard = game.getCollection().stream()
+            WorldCardEntity playerCard = game.getCollection().stream()
                     .filter(c -> c.getCardName().equals(deckCardName))
                     .findFirst()
                     .orElseThrow(() -> new CardNotFoundException("Deck card not found in collection: " + deckCardName));
 
-            CardEntity dungeonCard = dungeon.getCards().get(i);
+            WorldCardEntity dungeonCard = dungeon.getCards().get(i);
 
             BattleRound round = battleService.evaluateBattle(playerCard, dungeonCard);
             rounds.add(round);
@@ -133,7 +105,7 @@ public class GameService {
             return "No cards to upgrade";
         }
 
-        CardEntity cardToUpgrade = game.getCollection().get(0);
+        WorldCardEntity cardToUpgrade = game.getCollection().get(0);
 
         if (rewardType == RewardType.BONUS_DAMAGE) {
             cardToUpgrade.setDamage(cardToUpgrade.getDamage() + rewardAmount);
@@ -158,7 +130,7 @@ public class GameService {
         GameEntity game = gameRepository.findById(gameId)
                 .orElseThrow(() -> new GameNotFoundException("Game not found: " + gameId));
 
-        CardEntity card = game.getCollection().stream()
+        WorldCardEntity card = game.getCollection().stream()
                 .filter(c -> c.getCardName().equals(cardName))
                 .findFirst()
                 .orElseThrow(() -> new CardNotFoundException("Card not in collection: " + cardName));

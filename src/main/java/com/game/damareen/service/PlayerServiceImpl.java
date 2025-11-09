@@ -1,8 +1,9 @@
 package com.game.damareen.service;
 
 import com.game.damareen.db.entity.PlayerEntity;
+import com.game.damareen.domain.Player;
 import com.game.damareen.exception.DuplicatePlayerException;
-import com.game.damareen.exception.PlayerNotFoundException;
+import com.game.damareen.mapper.PlayerMapper;
 import com.game.damareen.repository.PlayerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,18 +16,28 @@ public class PlayerServiceImpl implements PlayerService {
 
     @Override
     @Transactional
-    public void createPlayer(String userName) {
+    public long createPlayer(String userName) {
         if (playerRepository.existsByUserName(userName)) {
             throw new DuplicatePlayerException("Player with username '" + userName + "' already exists");
         }
         PlayerEntity player = new PlayerEntity(userName);
-        playerRepository.save(player);
+        PlayerEntity save = playerRepository.save(player);
+        return save.getId();
     }
 
     @Override
-    public long getPlayer(String userName) {
-        return playerRepository.findByUserName(userName)
-                .orElseThrow(() -> new PlayerNotFoundException("Player '" + userName + "' not found"))
-                .getId();
+    public Long getPlayerId(String userName) {
+        return playerRepository
+                .findByUserName(userName)
+                .map(PlayerEntity::getId)
+                .orElse(null);
+    }
+
+    @Override
+    public Player getPlayerById(Long id) {
+        return playerRepository
+                .findById(id)
+                .map(PlayerMapper::fromEntity)
+                .orElseThrow(() -> new IllegalArgumentException("Player not found!"));
     }
 }

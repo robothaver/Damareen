@@ -1,14 +1,14 @@
 package com.game.damareen.service;
 
+import com.game.damareen.db.entity.WorldCardEntity;
 import com.game.damareen.domain.BattleRound;
 import com.game.damareen.domain.card.CardType;
 import com.game.damareen.domain.card.WorldCard;
-import com.game.damareen.db.entity.CardEntity;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BattleService {
-    public BattleRound evaluateBattle(CardEntity playerCard, CardEntity dungeonCard) {
+    public BattleRound evaluateBattle(WorldCardEntity playerCard, WorldCardEntity dungeonCard) {
         boolean playerWinsByDamage = playerCard.getDamage() > dungeonCard.getHealth();
         boolean dungeonWinsByDamage = dungeonCard.getDamage() > playerCard.getHealth();
 
@@ -58,7 +58,7 @@ public class BattleService {
         );
     }
 
-    private WorldCard toDto(CardEntity card) {
+    private WorldCard toDto(WorldCardEntity card) {
         return new WorldCard(
                 card.getId(),
                 card.getCardName(),
