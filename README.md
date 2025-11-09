@@ -1,6 +1,16 @@
 # Damareen API
 
-A simple card-based dungeon battle game API. Players can create cards, leader cards, dungeons, and games, then battle through dungeons using their deck.
+# A program elindítása
+A program elindításához használhatjuk a mavent a project mappájában:
+
+```
+mvn spring-boot:run
+```
+vagy IntelIj-ből is elindítható a projekt
+
+# A projektről
+Sajnos nem sikerült befejeznünk a projektet, mivel a frontend nem készült el.
+Ami elkészült azt felraktuk ide: [Github](https://github.com/robothaver/damareen)
 
 ## Base URL
 
@@ -8,42 +18,6 @@ A simple card-based dungeon battle game API. Players can create cards, leader ca
 http://localhost:8080/api
 ```
 
----
-
-## Players
-
-### Create Player
-
-**POST** `/player/create`
-**Parameters**:
-
-| Parameter  | Type   | Description                          |
-| ---------- | ------ | ------------------------------------ |
-| playerName | String | Name of the player (cannot be blank) |
-
-**Response**: `Long` (Player ID)
-
-**Example:**
-
-```bash
-POST /api/player/create?playerName=Hero
-```
-
-### Get Player
-
-**GET** `/player/{playerName}`
-
-**Response**: `Player` object
-
-```json
-{
-  "id": 1,
-  "userName": "Hero",
-  "createdAt": "2025-11-09T18:18:27.077115"
-}
-```
-
----
 
 ## Cards
 
@@ -104,8 +78,8 @@ POST /api/player/create?playerName=Hero
 {
   "name": "Mines of Moria",
   "type": "SMALL_DUNGEON",
-  "cards": [1, 2, 3],
-  "leadCard": 1
+  "cards": [cardId, cardId, cardId],
+  "leadCard": leadCardId
 }
 ```
 
